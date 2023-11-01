@@ -1,0 +1,19 @@
+
+server:
+  http:
+    addr: 0.0.0.0:8000
+    timeout: 5000
+  jwt:
+    secret: 
+    timeout: 604800
+    refresh: 4579200
+data:
+  database:
+    driver: mysql
+    source: 
+  redis:
+    addr: 
+    password: 
+    db: 1
+app: 
+  env: dev

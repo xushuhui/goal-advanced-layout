@@ -1,0 +1,47 @@
+syntax = "proto3";
+package conf;
+
+option go_package = "fm-suggest/internal/conf;conf";
+
+import "google/protobuf/duration.proto";
+
+message Bootstrap {
+  Server server = 1;
+  Data data = 2;
+  App app=4;
+}
+message App{
+  string env=1;
+}
+message Server {
+  message HTTP {
+    string addr = 1;
+    uint32 timeout = 3;
+  }
+  message Jwt {
+    string secret = 1;
+    uint32 timeout = 2;
+    uint32 refresh = 3;
+  }
+
+  HTTP http = 1;
+  Jwt jwt = 3;
+ 
+}
+
+message Data {
+  message Database {
+    string driver = 1;
+    string source = 2;
+  }
+  message Redis {
+    string addr = 1;
+    string password=2;
+    google.protobuf.Duration read_timeout = 3;
+    google.protobuf.Duration write_timeout = 4;
+    int32 db=5;
+  }
+
+  Database database = 1;
+  Redis redis = 2;
+}
