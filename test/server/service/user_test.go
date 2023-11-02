@@ -19,7 +19,7 @@ import (
 	"nunu-http-layout/pkg/helper/sid"
 	"nunu-http-layout/pkg/jwt"
 	"nunu-http-layout/pkg/log"
-	mock_repository "nunu-http-layout/test/mocks/repository"
+	mock_repository "nunu-http-layout/test/mocks/data"
 )
 
 var (
@@ -29,12 +29,7 @@ var (
 func TestMain(m *testing.M) {
 	fmt.Println("begin")
 
-	err := os.Setenv("APP_CONF", "../../../config/local.yml")
-	if err != nil {
-		panic(err)
-	}
-
-	var envConf = flag.String("conf", "config/local.yml", "config path, eg: -conf ./config/local.yml")
+	var envConf = flag.String("conf", "../../../configs/dev.yml", "config path, eg: -conf ./config/local.yml")
 	flag.Parse()
 	conf := config.NewConfig(*envConf)
 
@@ -53,7 +48,7 @@ func TestUserService_Register(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockUserRepo := mock_repository.NewMockUserRepository(ctrl)
+	mockUserRepo := mock_repository.NewMockUserRepo(ctrl)
 
 	userService := service.NewUserService(srv, mockUserRepo)
 
@@ -76,7 +71,7 @@ func TestUserService_Register_UsernameExists(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockUserRepo := mock_repository.NewMockUserRepository(ctrl)
+	mockUserRepo := mock_repository.NewMockUserRepo(ctrl)
 
 	userService := service.NewUserService(srv, mockUserRepo)
 
@@ -98,7 +93,7 @@ func TestUserService_Login(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockUserRepo := mock_repository.NewMockUserRepository(ctrl)
+	mockUserRepo := mock_repository.NewMockUserRepo(ctrl)
 
 	userService := service.NewUserService(srv, mockUserRepo)
 
@@ -126,7 +121,7 @@ func TestUserService_Login_UserNotFound(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockUserRepo := mock_repository.NewMockUserRepository(ctrl)
+	mockUserRepo := mock_repository.NewMockUserRepo(ctrl)
 
 	userService := service.NewUserService(srv, mockUserRepo)
 
@@ -147,7 +142,7 @@ func TestUserService_GetProfile(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockUserRepo := mock_repository.NewMockUserRepository(ctrl)
+	mockUserRepo := mock_repository.NewMockUserRepo(ctrl)
 
 	userService := service.NewUserService(srv, mockUserRepo)
 
@@ -171,7 +166,7 @@ func TestUserService_UpdateProfile(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockUserRepo := mock_repository.NewMockUserRepository(ctrl)
+	mockUserRepo := mock_repository.NewMockUserRepo(ctrl)
 
 	userService := service.NewUserService(srv, mockUserRepo)
 
@@ -198,7 +193,7 @@ func TestUserService_UpdateProfile_UserNotFound(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockUserRepo := mock_repository.NewMockUserRepository(ctrl)
+	mockUserRepo := mock_repository.NewMockUserRepo(ctrl)
 
 	userService := service.NewUserService(srv, mockUserRepo)
 

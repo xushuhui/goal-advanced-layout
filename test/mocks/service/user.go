@@ -6,9 +6,9 @@ package mock_service
 
 import (
 	context "context"
+	api "nunu-http-layout/api"
 	reflect "reflect"
 
-	v1 "nunu-http-layout/api"
 	gomock "github.com/golang/mock/gomock"
 )
 
@@ -36,10 +36,10 @@ func (m *MockUserService) EXPECT() *MockUserServiceMockRecorder {
 }
 
 // GetProfile mocks base method.
-func (m *MockUserService) GetProfile(ctx context.Context, userId string) (*v1.GetProfileResponseData, error) {
+func (m *MockUserService) GetProfile(ctx context.Context, userId string) (*api.GetProfileResponseData, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetProfile", ctx, userId)
-	ret0, _ := ret[0].(*v1.GetProfileResponseData)
+	ret0, _ := ret[0].(*api.GetProfileResponseData)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -51,7 +51,7 @@ func (mr *MockUserServiceMockRecorder) GetProfile(ctx, userId interface{}) *gomo
 }
 
 // Login mocks base method.
-func (m *MockUserService) Login(ctx context.Context, req *v1.LoginRequest) (string, error) {
+func (m *MockUserService) Login(ctx context.Context, req *api.LoginRequest) (string, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Login", ctx, req)
 	ret0, _ := ret[0].(string)
@@ -66,7 +66,7 @@ func (mr *MockUserServiceMockRecorder) Login(ctx, req interface{}) *gomock.Call 
 }
 
 // Register mocks base method.
-func (m *MockUserService) Register(ctx context.Context, req *v1.RegisterRequest) error {
+func (m *MockUserService) Register(ctx context.Context, req *api.RegisterRequest) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Register", ctx, req)
 	ret0, _ := ret[0].(error)
@@ -80,7 +80,7 @@ func (mr *MockUserServiceMockRecorder) Register(ctx, req interface{}) *gomock.Ca
 }
 
 // UpdateProfile mocks base method.
-func (m *MockUserService) UpdateProfile(ctx context.Context, userId string, req *v1.UpdateProfileRequest) error {
+func (m *MockUserService) UpdateProfile(ctx context.Context, userId string, req *api.UpdateProfileRequest) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "UpdateProfile", ctx, userId, req)
 	ret0, _ := ret[0].(error)

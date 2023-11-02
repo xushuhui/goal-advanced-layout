@@ -35,11 +35,8 @@ var router *gin.Engine
 
 func TestMain(m *testing.M) {
 	fmt.Println("begin")
-	err := os.Setenv("APP_CONF", "../../../config/local.yml")
-	if err != nil {
-		fmt.Println("Setenv error", err)
-	}
-	var envConf = flag.String("conf", "config/local.yml", "config path, eg: -conf ./config/local.yml")
+	
+	var envConf = flag.String("conf", "../../../config/dev.yml", "config path, eg: -conf ./config/local.yml")
 	flag.Parse()
 	conf := config.NewConfig(*envConf)
 
