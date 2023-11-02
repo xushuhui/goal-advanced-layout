@@ -19,7 +19,7 @@ func SignMiddleware(logger *log.Logger, conf *viper.Viper) gin.HandlerFunc {
 		for _, header := range requiredHeaders {
 			value, ok := ctx.Request.Header[header]
 			if !ok || len(value) == 0 {
-				v1.HandleError(ctx, http.StatusBadRequest, v1.ErrBadRequest, nil)
+				v1.Fail(ctx, http.StatusBadRequest, v1.ErrBadRequest, nil)
 				ctx.Abort()
 				return
 			}
@@ -45,7 +45,7 @@ func SignMiddleware(logger *log.Logger, conf *viper.Viper) gin.HandlerFunc {
 		str += conf.GetString("security.api_sign.app_security")
 
 		if ctx.Request.Header.Get("Sign") != strings.ToUpper(md5.Md5(str)) {
-			v1.HandleError(ctx, http.StatusBadRequest, v1.ErrBadRequest, nil)
+			v1.Fail(ctx, http.StatusBadRequest, v1.ErrBadRequest, nil)
 			ctx.Abort()
 			return
 		}

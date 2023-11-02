@@ -42,17 +42,17 @@ type userHandler struct {
 func (h *userHandler) Register(ctx *gin.Context) {
 	req := new(api.RegisterRequest)
 	if err := ctx.ShouldBindJSON(req); err != nil {
-		api.HandleError(ctx, http.StatusBadRequest, api.ErrBadRequest, nil)
+		api.Fail(ctx, http.StatusBadRequest, api.ErrBadRequest, nil)
 		return
 	}
 
 	if err := h.userService.Register(ctx, req); err != nil {
 		h.logger.WithContext(ctx).Error("userService.Register error", zap.Error(err))
-		api.HandleError(ctx, http.StatusInternalServerError, err, nil)
+		api.Fail(ctx, http.StatusInternalServerError, err, nil)
 		return
 	}
 
-	api.HandleSuccess(ctx, nil)
+	api.Succeed(ctx, nil)
 }
 
 // Login godoc
@@ -68,16 +68,16 @@ func (h *userHandler) Register(ctx *gin.Context) {
 func (h *userHandler) Login(ctx *gin.Context) {
 	var req api.LoginRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
-		api.HandleError(ctx, http.StatusBadRequest, api.ErrBadRequest, nil)
+		api.Fail(ctx, http.StatusBadRequest, api.ErrBadRequest, nil)
 		return
 	}
 
 	token, err := h.userService.Login(ctx, &req)
 	if err != nil {
-		api.HandleError(ctx, http.StatusUnauthorized, api.ErrUnauthorized, nil)
+		api.Fail(ctx, http.StatusUnauthorized, api.ErrUnauthorized, nil)
 		return
 	}
-	api.HandleSuccess(ctx, api.LoginResponseData{
+	api.Succeed(ctx, api.LoginResponseData{
 		AccessToken: token,
 	})
 }
@@ -95,17 +95,17 @@ func (h *userHandler) Login(ctx *gin.Context) {
 func (h *userHandler) GetProfile(ctx *gin.Context) {
 	userId := GetUserIdFromCtx(ctx)
 	if userId == "" {
-		api.HandleError(ctx, http.StatusUnauthorized, api.ErrUnauthorized, nil)
+		api.Fail(ctx, http.StatusUnauthorized, api.ErrUnauthorized, nil)
 		return
 	}
 
 	user, err := h.userService.GetProfile(ctx, userId)
 	if err != nil {
-		api.HandleError(ctx, http.StatusBadRequest, api.ErrBadRequest, nil)
+		api.Fail(ctx, http.StatusBadRequest, api.ErrBadRequest, nil)
 		return
 	}
 
-	api.HandleSuccess(ctx, user)
+	api.Succeed(ctx, user)
 }
 
 func (h *userHandler) UpdateProfile(ctx *gin.Context) {
@@ -113,14 +113,14 @@ func (h *userHandler) UpdateProfile(ctx *gin.Context) {
 
 	var req api.UpdateProfileRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
-		api.HandleError(ctx, http.StatusBadRequest, api.ErrBadRequest, nil)
+		api.Fail(ctx, http.StatusBadRequest, api.ErrBadRequest, nil)
 		return
 	}
 
 	if err := h.userService.UpdateProfile(ctx, userId, &req); err != nil {
-		api.HandleError(ctx, http.StatusInternalServerError, api.ErrInternalServerError, nil)
+		api.Fail(ctx, http.StatusInternalServerError, api.ErrInternalServerError, nil)
 		return
 	}
 
-	api.HandleSuccess(ctx, nil)
+	api.Succeed(ctx, nil)
 }

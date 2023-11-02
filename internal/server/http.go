@@ -42,7 +42,7 @@ func NewHTTPServer(
 	)
 	s.GET("/", func(ctx *gin.Context) {
 		logger.WithContext(ctx).Info("hello")
-		api.HandleSuccess(ctx, map[string]any{
+		api.Succeed(ctx, map[string]any{
 			":)": "Thank you for using nunu!",
 		})
 	})

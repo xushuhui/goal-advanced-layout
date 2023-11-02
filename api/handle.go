@@ -2,25 +2,26 @@ package api
 
 import (
 	"errors"
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 type Response struct {
-	Code    int         `json:"code"`
-	Message string      `json:"message"`
-	Data    interface{} `json:"data"`
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+	Data    any    `json:"data"`
 }
 
-func HandleSuccess(ctx *gin.Context, data interface{}) {
+func Succeed(ctx *gin.Context, data any) {
 	if data == nil {
-		data = map[string]interface{}{}
+		data = map[string]any{}
 	}
 	resp := Response{Code: ErrorCodeMap[ErrSuccess], Message: ErrSuccess.Error(), Data: data}
 	ctx.JSON(http.StatusOK, resp)
 }
 
-func HandleError(ctx *gin.Context, httpCode int, err error, data interface{}) {
+func Fail(ctx *gin.Context, httpCode int, err error, data any) {
 	if data == nil {
 		data = map[string]string{}
 	}
@@ -40,6 +41,7 @@ func newError(code int, msg string) error {
 	ErrorCodeMap[err] = code
 	return err
 }
+
 func (e Error) Error() string {
 	return e.Message
 }
