@@ -1,10 +1,14 @@
 package service
 
 import (
-	"fm-suggest/pkg/helper/sid"
-	"fm-suggest/pkg/jwt"
-	"fm-suggest/pkg/log"
+	"github.com/google/wire"
+
+	"nunu-http-layout/pkg/helper/sid"
+	"nunu-http-layout/pkg/jwt"
+	"nunu-http-layout/pkg/log"
 )
+
+var ProviderSet = wire.NewSet(NewService,NewUserService)
 
 type Service struct {
 	logger *log.Logger

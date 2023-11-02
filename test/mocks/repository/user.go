@@ -8,7 +8,7 @@ import (
 	context "context"
 	reflect "reflect"
 
-	model "fm-suggest/internal/model"
+	model "nunu-http-layout/internal/data/model"
 	gomock "github.com/golang/mock/gomock"
 )
 

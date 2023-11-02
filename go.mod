@@ -1,4 +1,4 @@
-module fm-suggest
+module nunu-http-layout
 
 go 1.19
 

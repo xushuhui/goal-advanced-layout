@@ -9,7 +9,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"fm-suggest/pkg/log"
+	"nunu-http-layout/pkg/log"
 )
 
 type Server struct {

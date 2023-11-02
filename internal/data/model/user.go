@@ -14,7 +14,7 @@ type User struct {
 	Email     string `gorm:"not null"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
-	DeletedAt gorm.DeletedAt `gorm:"index"`
+	DeletedAt gorm.DeletedAt `gorm:"-"`
 }
 
 func (u *User) TableName() string {

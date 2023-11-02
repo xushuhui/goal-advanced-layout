@@ -6,9 +6,9 @@ import (
 
 	"golang.org/x/crypto/bcrypt"
 
-	v1 "fm-suggest/api"
-	"fm-suggest/internal/data"
-	"fm-suggest/internal/model"
+	v1 "nunu-http-layout/api"
+	"nunu-http-layout/internal/data"
+	"nunu-http-layout/internal/data/model"
 )
 
 type UserService interface {

@@ -8,7 +8,7 @@ import (
 	context "context"
 	reflect "reflect"
 
-	v1 "fm-suggest/api"
+	v1 "nunu-http-layout/api"
 	gomock "github.com/golang/mock/gomock"
 )
 

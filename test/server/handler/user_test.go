@@ -15,13 +15,13 @@ import (
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
 
-	v1 "fm-suggest/api"
-	"fm-suggest/internal/handler"
-	"fm-suggest/internal/server/middleware"
-	"fm-suggest/pkg/config"
-	jwt2 "fm-suggest/pkg/jwt"
-	"fm-suggest/pkg/log"
-	mock_service "fm-suggest/test/mocks/service"
+	v1 "nunu-http-layout/api"
+	"nunu-http-layout/internal/handler"
+	"nunu-http-layout/internal/server/middleware"
+	"nunu-http-layout/pkg/config"
+	jwt2 "nunu-http-layout/pkg/jwt"
+	"nunu-http-layout/pkg/log"
+	mock_service "nunu-http-layout/test/mocks/service"
 )
 
 var (

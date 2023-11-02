@@ -6,8 +6,8 @@ import (
 
 	"gorm.io/gorm"
 
-	"fm-suggest/api"
-	"fm-suggest/internal/model"
+	"nunu-http-layout/api"
+	"nunu-http-layout/internal/data/model"
 )
 
 type UserRepo interface {

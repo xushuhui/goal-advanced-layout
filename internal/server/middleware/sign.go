@@ -1,10 +1,10 @@
 package middleware
 
 import (
-	v1 "fm-suggest/api"
-	"fm-suggest/pkg/helper/md5"
-	"fm-suggest/pkg/log"
 	"net/http"
+	v1 "nunu-http-layout/api"
+	"nunu-http-layout/pkg/helper/md5"
+	"nunu-http-layout/pkg/log"
 	"sort"
 	"strings"
 

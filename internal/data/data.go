@@ -5,14 +5,17 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/google/wire"
 	"github.com/redis/go-redis/v9"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"moul.io/zapgorm2"
 
-	"fm-suggest/internal/conf"
-	"fm-suggest/pkg/log"
+	"nunu-http-layout/internal/conf"
+	"nunu-http-layout/pkg/log"
 )
+
+var ProviderSet = wire.NewSet(NewDB,NewRedis,NewData,NewUserRepo)
 
 type Data struct {
 	db     *gorm.DB

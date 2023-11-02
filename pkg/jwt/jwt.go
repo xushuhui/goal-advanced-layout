@@ -7,7 +7,7 @@ import (
 
 	"github.com/golang-jwt/jwt/v5"
 
-	"fm-suggest/internal/conf"
+	"nunu-http-layout/internal/conf"
 )
 
 type JWT struct {

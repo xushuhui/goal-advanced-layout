@@ -6,7 +6,7 @@ import (
 
 	yaml "gopkg.in/yaml.v3"
 
-	"fm-suggest/internal/conf"
+	"nunu-http-layout/internal/conf"
 )
 
 func NewConfig(path string) *conf.Bootstrap {

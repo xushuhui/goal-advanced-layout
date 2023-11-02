@@ -2,7 +2,7 @@ package server
 
 import (
 	"context"
-	"fm-suggest/pkg/log"
+	"nunu-http-layout/pkg/log"
 )
 
 type Job struct {

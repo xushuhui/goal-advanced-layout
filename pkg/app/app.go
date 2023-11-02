@@ -2,8 +2,8 @@ package app
 
 import (
 	"context"
-	"fm-suggest/pkg/server"
 	"log"
+	"nunu-http-layout/pkg/server"
 	"os"
 	"os/signal"
 	"syscall"

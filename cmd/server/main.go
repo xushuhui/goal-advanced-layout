@@ -7,9 +7,9 @@ import (
 
 	"go.uber.org/zap"
 
-	"fm-suggest/cmd/server/wire"
-	"fm-suggest/pkg/config"
-	"fm-suggest/pkg/log"
+	"nunu-http-layout/cmd/server/wire"
+	"nunu-http-layout/pkg/config"
+	"nunu-http-layout/pkg/log"
 )
 
 // @title           Nunu Example API
@@ -28,19 +28,21 @@ import (
 // @externalDocs.description  OpenAPI
 // @externalDocs.url          https://swagger.io/resources/open-api/
 func main() {
-	var envConf = flag.String("conf", "config/dev.yml", "config path, eg: -conf ./config/dev.yml")
+	flagconf := flag.String("conf", "configs/dev.yml", "config path, eg: -conf ./configs/dev.yml")
 	flag.Parse()
-	conf := config.NewConfig(*envConf)
+
+	conf := config.NewConfig(*flagconf)
 
 	logger := log.NewLog()
 
 	app, cleanup, err := wire.NewWire(conf.Server, conf.Data, logger)
-	defer cleanup()
 	if err != nil {
 		panic(err)
 	}
+	defer cleanup()
 	logger.Info("server start", zap.String("host", conf.Server.Http.Addr))
 	logger.Info("docs addr", zap.String("addr", fmt.Sprintf("%s/swagger/index.html", conf.Server.Http.Addr)))
+
 	if err = app.Run(context.Background()); err != nil {
 		panic(err)
 	}

@@ -2,11 +2,12 @@ package server
 
 import (
 	"context"
-	"fm-suggest/internal/model"
-	"fm-suggest/pkg/log"
+	"nunu-http-layout/internal/data/model"
+	"nunu-http-layout/pkg/log"
+	"os"
+
 	"go.uber.org/zap"
 	"gorm.io/gorm"
-	"os"
 )
 
 type Migrate struct {

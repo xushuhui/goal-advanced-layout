@@ -7,17 +7,16 @@
 package wire
 
 import (
-	"fm-suggest/internal/conf"
-	"fm-suggest/internal/data"
-	"fm-suggest/internal/handler"
-	"fm-suggest/internal/server"
-	"fm-suggest/internal/service"
-	"fm-suggest/pkg/app"
-	"fm-suggest/pkg/helper/sid"
-	"fm-suggest/pkg/jwt"
-	"fm-suggest/pkg/log"
-	"fm-suggest/pkg/server/http"
-	"github.com/google/wire"
+	"nunu-http-layout/internal/conf"
+	"nunu-http-layout/internal/data"
+	"nunu-http-layout/internal/handler"
+	"nunu-http-layout/internal/server"
+	"nunu-http-layout/internal/service"
+	"nunu-http-layout/pkg/app"
+	"nunu-http-layout/pkg/helper/sid"
+	"nunu-http-layout/pkg/jwt"
+	"nunu-http-layout/pkg/log"
+	"nunu-http-layout/pkg/server/http"
 )
 
 // Injectors from wire.go:
@@ -41,14 +40,6 @@ func NewWire(confServer *conf.Server, confData *conf.Data, logger *log.Logger) (
 }
 
 // wire.go:
-
-var handlerSet = wire.NewSet(handler.NewHandler, handler.NewUserHandler)
-
-var serviceSet = wire.NewSet(service.NewService, service.NewUserService)
-
-var dataSet = wire.NewSet(data.NewDB, data.NewRedis, data.NewData, data.NewUserRepo)
-
-var serverSet = wire.NewSet(server.NewHTTPServer, server.NewJob, server.NewTask)
 
 // build App
 func newApp(httpServer *http.Server, job *server.Job) *app.App {

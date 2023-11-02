@@ -12,14 +12,14 @@ import (
 	"github.com/stretchr/testify/assert"
 	"golang.org/x/crypto/bcrypt"
 
-	v1 "fm-suggest/api"
-	"fm-suggest/internal/model"
-	"fm-suggest/internal/service"
-	"fm-suggest/pkg/config"
-	"fm-suggest/pkg/helper/sid"
-	"fm-suggest/pkg/jwt"
-	"fm-suggest/pkg/log"
-	mock_repository "fm-suggest/test/mocks/repository"
+	v1 "nunu-http-layout/api"
+	"nunu-http-layout/internal/data/model"
+	"nunu-http-layout/internal/service"
+	"nunu-http-layout/pkg/config"
+	"nunu-http-layout/pkg/helper/sid"
+	"nunu-http-layout/pkg/jwt"
+	"nunu-http-layout/pkg/log"
+	mock_repository "nunu-http-layout/test/mocks/repository"
 )
 
 var (

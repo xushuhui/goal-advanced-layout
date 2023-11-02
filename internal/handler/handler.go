@@ -2,9 +2,13 @@ package handler
 
 import (
 	"github.com/gin-gonic/gin"
-	"fm-suggest/pkg/jwt"
-	"fm-suggest/pkg/log"
+	"github.com/google/wire"
+
+	"nunu-http-layout/pkg/jwt"
+	"nunu-http-layout/pkg/log"
 )
+
+var ProviderSet = wire.NewSet(NewHandler, NewUserHandler)
 
 type Handler struct {
 	logger *log.Logger
@@ -15,6 +19,7 @@ func NewHandler(logger *log.Logger) *Handler {
 		logger: logger,
 	}
 }
+
 func GetUserIdFromCtx(ctx *gin.Context) string {
 	v, exists := ctx.Get("claims")
 	if !exists {

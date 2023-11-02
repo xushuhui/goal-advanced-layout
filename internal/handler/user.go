@@ -6,8 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 
-	"fm-suggest/api"
-	"fm-suggest/internal/service"
+	"nunu-http-layout/api"
+	"nunu-http-layout/internal/service"
 )
 
 type UserHandler interface {

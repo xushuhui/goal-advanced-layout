@@ -5,14 +5,14 @@ import (
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 
-	"fm-suggest/api"
-	"fm-suggest/docs"
-	"fm-suggest/internal/conf"
-	"fm-suggest/internal/handler"
-	"fm-suggest/internal/server/middleware"
-	"fm-suggest/pkg/jwt"
-	"fm-suggest/pkg/log"
-	"fm-suggest/pkg/server/http"
+	"nunu-http-layout/api"
+	"nunu-http-layout/docs"
+	"nunu-http-layout/internal/conf"
+	"nunu-http-layout/internal/handler"
+	"nunu-http-layout/internal/server/middleware"
+	"nunu-http-layout/pkg/jwt"
+	"nunu-http-layout/pkg/log"
+	"nunu-http-layout/pkg/server/http"
 )
 
 func NewHTTPServer(
@@ -32,7 +32,6 @@ func NewHTTPServer(
 	docs.SwaggerInfo.BasePath = "/api"
 	s.GET("/swagger/*any", ginSwagger.WrapHandler(
 		swaggerfiles.Handler,
-		// ginSwagger.URL(fmt.Sprintf("http://localhost:%d/swagger/doc.json", conf.GetInt("app.http.port"))),
 		ginSwagger.DefaultModelsExpandDepth(-1),
 	))
 
