@@ -29,7 +29,7 @@ var (
 func TestMain(m *testing.M) {
 	fmt.Println("begin")
 
-	var envConf = flag.String("conf", "../../../configs/dev.yml", "config path, eg: -conf ./config/local.yml")
+	var envConf = flag.String("conf", "../../../configs/dev.yaml", "config path, eg: -conf ./config/local.yml")
 	flag.Parse()
 	conf := config.NewConfig(*envConf)
 

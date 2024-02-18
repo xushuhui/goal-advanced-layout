@@ -35,8 +35,8 @@ var router *gin.Engine
 
 func TestMain(m *testing.M) {
 	fmt.Println("begin")
-	
-	var envConf = flag.String("conf", "../../../config/dev.yml", "config path, eg: -conf ./config/local.yml")
+
+	var envConf = flag.String("conf", "../../../config/dev.yaml", "config path, eg: -conf ./config/local.yml")
 	flag.Parse()
 	conf := config.NewConfig(*envConf)
 
@@ -47,9 +47,9 @@ func TestMain(m *testing.M) {
 	gin.SetMode(gin.TestMode)
 	router = gin.Default()
 	router.Use(
-		middleware.CORSMiddleware(),
-		middleware.ResponseLogMiddleware(logger),
-		middleware.RequestLogMiddleware(logger),
+		middleware.CORS(),
+		middleware.ResponseLog(logger),
+		middleware.RequestLog(logger),
 		// middleware.SignMiddleware(log),
 	)
 

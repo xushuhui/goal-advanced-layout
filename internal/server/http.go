@@ -19,7 +19,7 @@ func NewHTTPServer(
 	logger *log.Logger,
 	conf *conf.Server,
 	jwt *jwt.JWT,
-	userHandler handler.UserHandler,
+	userHandler *handler.UserHandler,
 ) *http.Server {
 	gin.SetMode(gin.DebugMode)
 	s := http.NewServer(
@@ -36,14 +36,14 @@ func NewHTTPServer(
 	))
 
 	s.Use(
-		middleware.CORSMiddleware(),
-		middleware.ResponseLogMiddleware(logger),
-		middleware.RequestLogMiddleware(logger),
+		middleware.CORS(),
+		middleware.ResponseLog(logger),
+		middleware.RequestLog(logger),
 	)
 	s.GET("/", func(ctx *gin.Context) {
 		logger.WithContext(ctx).Info("hello")
 		api.Succeed(ctx, map[string]any{
-			":)": "Thank you for using nunu!",
+			":)": "Thank you!",
 		})
 	})
 

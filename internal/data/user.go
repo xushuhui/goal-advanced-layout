@@ -17,9 +17,9 @@ type UserRepo interface {
 	GetByUsername(ctx context.Context, username string) (*model.User, error)
 }
 
-func NewUserRepo(r *Data) UserRepo {
+func NewUserRepo(data *Data) UserRepo {
 	return &userRepo{
-		Data: r,
+		Data: data,
 	}
 }
 

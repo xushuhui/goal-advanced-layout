@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func CORSMiddleware() gin.HandlerFunc {
+func CORS() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		method := c.Request.Method
 		c.Header("Access-Control-Allow-Origin", c.GetHeader("Origin"))

@@ -28,7 +28,7 @@ import (
 // @externalDocs.description  OpenAPI
 // @externalDocs.url          https://swagger.io/resources/open-api/
 func main() {
-	flagconf := flag.String("conf", "configs/dev.yml", "config path, eg: -conf ./configs/dev.yml")
+	flagconf := flag.String("conf", "configs/dev.yaml", "config path, eg: -conf ./configs/dev.yaml")
 	flag.Parse()
 
 	conf := config.NewConfig(*flagconf)

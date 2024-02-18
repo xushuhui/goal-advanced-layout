@@ -12,7 +12,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func RequestLogMiddleware(logger *log.Logger) gin.HandlerFunc {
+func RequestLog(logger *log.Logger) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		// The configuration is initialized once per request
 		trace := md5.Md5(uuid.GenUUID())
@@ -29,7 +29,7 @@ func RequestLogMiddleware(logger *log.Logger) gin.HandlerFunc {
 		ctx.Next()
 	}
 }
-func ResponseLogMiddleware(logger *log.Logger) gin.HandlerFunc {
+func ResponseLog(logger *log.Logger) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		blw := &bodyLogWriter{body: bytes.NewBufferString(""), ResponseWriter: ctx.Writer}
 		ctx.Writer = blw
