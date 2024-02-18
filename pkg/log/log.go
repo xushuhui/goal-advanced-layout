@@ -4,23 +4,20 @@ import (
 	"os"
 	"time"
 
+	"context"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
-const LOGGER_KEY = "zapLogger"
+const ctxLoggerKey = "zapLogger"
 
 type Logger struct {
 	*zap.Logger
 }
 
 func NewLog() *Logger {
-	return initZap()
-}
-
-func initZap() *Logger {
 	// log address "out.log" User-defined
 	lp := "out.log"
 
@@ -44,7 +41,7 @@ func initZap() *Logger {
 		StacktraceKey:  "stacktrace",
 		LineEnding:     zapcore.DefaultLineEnding,
 		EncodeLevel:    zapcore.LowercaseLevelEncoder,
-		EncodeTime:     zapcore.EpochTimeEncoder,
+		EncodeTime:     timeEncoder,
 		EncodeDuration: zapcore.SecondsDurationEncoder,
 		EncodeCaller:   zapcore.ShortCallerEncoder,
 	})
@@ -53,28 +50,30 @@ func initZap() *Logger {
 		zapcore.NewMultiWriteSyncer(zapcore.AddSync(os.Stdout), zapcore.AddSync(&hook)), // Print to console and file
 		level,
 	)
-	// if conf.GetString("env") != "prod" {
-	// 	return &Logger{zap.New(core, zap.Development(), zap.AddCaller(), zap.AddStacktrace(zap.ErrorLevel))}
-	// }
+
 	return &Logger{zap.New(core, zap.AddCaller(), zap.AddStacktrace(zap.ErrorLevel))}
 }
 
 func timeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
-	// enc.AppendString(t.Format("2006-01-02 15:04:05"))
-	enc.AppendString(t.Format("2006-01-02 15:04:05.000000000"))
-}
-
-// NewContext Adds a field to the specified context
-func (l *Logger) NewContext(ctx *gin.Context, fields ...zapcore.Field) {
-	ctx.Set(LOGGER_KEY, l.WithContext(ctx).With(fields...))
+	enc.AppendString(t.Format("2006-01-02 15:04:05.000"))
 }
 
 // WithContext Returns a zap instance from the specified context
-func (l *Logger) WithContext(ctx *gin.Context) *Logger {
-	if ctx == nil {
-		return l
+func (l *Logger) WithValue(ctx context.Context, fields ...zapcore.Field) context.Context {
+	if c, ok := ctx.(*gin.Context); ok {
+		ctx = c.Request.Context()
+		c.Request = c.Request.WithContext(context.WithValue(ctx, ctxLoggerKey, l.WithContext(ctx).With(fields...)))
+		return c
 	}
-	zl, _ := ctx.Get(LOGGER_KEY)
+	return context.WithValue(ctx, ctxLoggerKey, l.WithContext(ctx).With(fields...))
+}
+
+// WithContext Returns a zap instance from the specified context
+func (l *Logger) WithContext(ctx context.Context) *Logger {
+	if c, ok := ctx.(*gin.Context); ok {
+		ctx = c.Request.Context()
+	}
+	zl := ctx.Value(ctxLoggerKey)
 	ctxLogger, ok := zl.(*zap.Logger)
 	if ok {
 		return &Logger{ctxLogger}
