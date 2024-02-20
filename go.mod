@@ -1,4 +1,4 @@
-module nunu-http-layout
+module goal-advanced-layout
 
 go 1.19
 

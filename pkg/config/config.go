@@ -6,7 +6,7 @@ import (
 
 	yaml "gopkg.in/yaml.v3"
 
-	"nunu-http-layout/internal/conf"
+	"goal-advanced-layout/internal/conf"
 )
 
 func NewConfig(path string) *conf.Bootstrap {

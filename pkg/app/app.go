@@ -3,7 +3,7 @@ package app
 import (
 	"context"
 	"log"
-	"nunu-http-layout/pkg/server"
+	"goal-advanced-layout/pkg/server"
 	"os"
 	"os/signal"
 	"syscall"

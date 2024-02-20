@@ -3,9 +3,9 @@ package middleware
 import (
 	"bytes"
 	"io"
-	"nunu-http-layout/pkg/helper/md5"
-	"nunu-http-layout/pkg/helper/uuid"
-	"nunu-http-layout/pkg/log"
+	"goal-advanced-layout/pkg/helper/md5"
+	"goal-advanced-layout/pkg/helper/uuid"
+	"goal-advanced-layout/pkg/log"
 	"time"
 
 	"github.com/gin-gonic/gin"

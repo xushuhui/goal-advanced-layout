@@ -6,7 +6,7 @@ package mock_service
 
 import (
 	context "context"
-	api "nunu-http-layout/api"
+	api "goal-advanced-layout/api"
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"

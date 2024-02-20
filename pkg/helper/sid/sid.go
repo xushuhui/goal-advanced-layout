@@ -1,7 +1,7 @@
 package sid
 
 import (
-	"nunu-http-layout/pkg/helper/convert"
+	"goal-advanced-layout/pkg/helper/convert"
 
 	"github.com/sony/sonyflake"
 )
@@ -17,6 +17,7 @@ func NewSid() *Sid {
 	}
 	return &Sid{sf}
 }
+
 func (s Sid) GenString() (string, error) {
 	id, err := s.sf.NextID()
 	if err != nil {
@@ -24,6 +25,7 @@ func (s Sid) GenString() (string, error) {
 	}
 	return convert.IntToBase62(int(id)), nil
 }
+
 func (s Sid) GenUint64() (uint64, error) {
 	return s.sf.NextID()
 }

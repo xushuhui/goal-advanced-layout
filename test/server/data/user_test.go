@@ -11,8 +11,8 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 
-	"nunu-http-layout/internal/data"
-	"nunu-http-layout/internal/data/model"
+	"goal-advanced-layout/internal/data"
+	"goal-advanced-layout/internal/data/model"
 )
 
 func setupRepository(t *testing.T) (data.UserRepo, sqlmock.Sqlmock) {

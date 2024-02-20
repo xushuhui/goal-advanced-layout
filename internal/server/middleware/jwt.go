@@ -6,9 +6,9 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 
-	"nunu-http-layout/api"
-	"nunu-http-layout/pkg/jwt"
-	"nunu-http-layout/pkg/log"
+	"goal-advanced-layout/api"
+	"goal-advanced-layout/pkg/jwt"
+	"goal-advanced-layout/pkg/log"
 )
 
 func StrictAuth(j *jwt.JWT, logger *log.Logger) gin.HandlerFunc {
@@ -69,5 +69,5 @@ func NoStrictAuth(j *jwt.JWT, logger *log.Logger) gin.HandlerFunc {
 
 func recoveryLoggerFunc(ctx *gin.Context, logger *log.Logger) {
 	userInfo := ctx.MustGet("claims").(*jwt.MyCustomClaims)
-	logger.NewContext(ctx, zap.String("UserId", userInfo.UserId))
+	logger.WithValue(ctx, zap.String("UserId", userInfo.UserId))
 }

@@ -12,14 +12,14 @@ import (
 	"github.com/stretchr/testify/assert"
 	"golang.org/x/crypto/bcrypt"
 
-	v1 "nunu-http-layout/api"
-	"nunu-http-layout/internal/data/model"
-	"nunu-http-layout/internal/service"
-	"nunu-http-layout/pkg/config"
-	"nunu-http-layout/pkg/helper/sid"
-	"nunu-http-layout/pkg/jwt"
-	"nunu-http-layout/pkg/log"
-	mock_repository "nunu-http-layout/test/mocks/data"
+	v1 "goal-advanced-layout/api"
+	"goal-advanced-layout/internal/data/model"
+	"goal-advanced-layout/internal/service"
+	"goal-advanced-layout/pkg/config"
+	"goal-advanced-layout/pkg/helper/sid"
+	"goal-advanced-layout/pkg/jwt"
+	"goal-advanced-layout/pkg/log"
+	mock_repository "goal-advanced-layout/test/mocks/data"
 )
 
 var (

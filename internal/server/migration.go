@@ -2,8 +2,8 @@ package server
 
 import (
 	"context"
-	"nunu-http-layout/internal/data/model"
-	"nunu-http-layout/pkg/log"
+	"goal-advanced-layout/internal/data/model"
+	"goal-advanced-layout/pkg/log"
 	"os"
 
 	"go.uber.org/zap"

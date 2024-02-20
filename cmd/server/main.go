@@ -6,11 +6,19 @@ import (
 	"fmt"
 
 	"go.uber.org/zap"
-
-	"nunu-http-layout/cmd/server/wire"
-	"nunu-http-layout/pkg/config"
-	"nunu-http-layout/pkg/log"
+	"goal-advanced-layout/internal/server"
+	"goal-advanced-layout/pkg/app"
+	"goal-advanced-layout/pkg/config"
+	"goal-advanced-layout/pkg/log"
+	"goal-advanced-layout/pkg/server/http"
 )
+
+func newApp(httpServer *http.Server, job *server.Job) *app.App {
+	return app.NewApp(
+		app.WithServer(httpServer, job),
+		app.WithName("demo-server"),
+	)
+}
 
 // @title           Nunu Example API
 // @version         1.0.0
@@ -25,8 +33,6 @@ import (
 // @securityDefinitions.apiKey Bearer
 // @in header
 // @name Authorization
-// @externalDocs.description  OpenAPI
-// @externalDocs.url          https://swagger.io/resources/open-api/
 func main() {
 	flagconf := flag.String("conf", "configs/dev.yaml", "config path, eg: -conf ./configs/dev.yaml")
 	flag.Parse()
@@ -35,7 +41,7 @@ func main() {
 
 	logger := log.NewLog()
 
-	app, cleanup, err := wire.NewWire(conf.Server, conf.Data, logger)
+	app, cleanup, err := NewWire(conf.Server, conf.Data, logger)
 	if err != nil {
 		panic(err)
 	}

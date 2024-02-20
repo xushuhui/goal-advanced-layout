@@ -6,7 +6,7 @@ package mock_data
 
 import (
 	context "context"
-	model "nunu-http-layout/internal/data/model"
+	model "goal-advanced-layout/internal/data/model"
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"

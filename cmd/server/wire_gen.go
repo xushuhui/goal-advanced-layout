@@ -4,19 +4,18 @@
 //go:build !wireinject
 // +build !wireinject
 
-package wire
+package main
 
 import (
-	"nunu-http-layout/internal/conf"
-	"nunu-http-layout/internal/data"
-	"nunu-http-layout/internal/handler"
-	"nunu-http-layout/internal/server"
-	"nunu-http-layout/internal/service"
-	"nunu-http-layout/pkg/app"
-	"nunu-http-layout/pkg/helper/sid"
-	"nunu-http-layout/pkg/jwt"
-	"nunu-http-layout/pkg/log"
-	"nunu-http-layout/pkg/server/http"
+	"goal-advanced-layout/internal/conf"
+	"goal-advanced-layout/internal/data"
+	"goal-advanced-layout/internal/handler"
+	"goal-advanced-layout/internal/server"
+	"goal-advanced-layout/internal/service"
+	"goal-advanced-layout/pkg/app"
+	"goal-advanced-layout/pkg/helper/sid"
+	"goal-advanced-layout/pkg/jwt"
+	"goal-advanced-layout/pkg/log"
 )
 
 // Injectors from wire.go:
@@ -37,11 +36,4 @@ func NewWire(confServer *conf.Server, confData *conf.Data, logger *log.Logger) (
 	appApp := newApp(httpServer, job)
 	return appApp, func() {
 	}, nil
-}
-
-// wire.go:
-
-// build App
-func newApp(httpServer *http.Server, job *server.Job) *app.App {
-	return app.NewApp(app.WithServer(httpServer, job), app.WithName("demo-server"))
 }

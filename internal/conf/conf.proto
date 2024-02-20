@@ -1,7 +1,7 @@
 syntax = "proto3";
 package conf;
 
-option go_package = "nunu-http-layout/internal/conf;conf";
+option go_package = "goal-advanced-layout/internal/conf;conf";
 
 import "google/protobuf/duration.proto";
 

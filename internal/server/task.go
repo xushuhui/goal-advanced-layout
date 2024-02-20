@@ -2,7 +2,7 @@ package server
 
 import (
 	"context"
-	"nunu-http-layout/pkg/log"
+	"goal-advanced-layout/pkg/log"
 	"time"
 
 	"github.com/go-co-op/gocron"

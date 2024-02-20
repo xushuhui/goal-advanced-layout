@@ -6,9 +6,9 @@ import (
 
 	"golang.org/x/crypto/bcrypt"
 
-	v1 "nunu-http-layout/api"
-	"nunu-http-layout/internal/data"
-	"nunu-http-layout/internal/data/model"
+	v1 "goal-advanced-layout/api"
+	"goal-advanced-layout/internal/data"
+	"goal-advanced-layout/internal/data/model"
 )
 
 type UserService interface {

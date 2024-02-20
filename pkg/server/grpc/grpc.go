@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net"
-	"nunu-http-layout/pkg/log"
+	"goal-advanced-layout/pkg/log"
 	"time"
 
 	"google.golang.org/grpc"

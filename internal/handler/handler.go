@@ -4,8 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/wire"
 
-	"nunu-http-layout/pkg/jwt"
-	"nunu-http-layout/pkg/log"
+	"goal-advanced-layout/pkg/jwt"
+	"goal-advanced-layout/pkg/log"
 )
 
 var ProviderSet = wire.NewSet(NewHandler, NewUserHandler)

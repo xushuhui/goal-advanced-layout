@@ -15,13 +15,13 @@ import (
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
 
-	v1 "nunu-http-layout/api"
-	"nunu-http-layout/internal/handler"
-	"nunu-http-layout/internal/server/middleware"
-	"nunu-http-layout/pkg/config"
-	jwt2 "nunu-http-layout/pkg/jwt"
-	"nunu-http-layout/pkg/log"
-	mock_service "nunu-http-layout/test/mocks/service"
+	v1 "goal-advanced-layout/api"
+	"goal-advanced-layout/internal/handler"
+	"goal-advanced-layout/internal/server/middleware"
+	"goal-advanced-layout/pkg/config"
+	jwt2 "goal-advanced-layout/pkg/jwt"
+	"goal-advanced-layout/pkg/log"
+	mock_service "goal-advanced-layout/test/mocks/service"
 )
 
 var (

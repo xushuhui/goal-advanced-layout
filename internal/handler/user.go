@@ -6,8 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 
-	"nunu-http-layout/api"
-	"nunu-http-layout/internal/service"
+	"goal-advanced-layout/api"
+	"goal-advanced-layout/internal/service"
 )
 
 func NewUserHandler(handler *Handler, userService service.UserService) *UserHandler {

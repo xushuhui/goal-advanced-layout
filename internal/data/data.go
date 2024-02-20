@@ -11,8 +11,8 @@ import (
 	"gorm.io/gorm"
 	"moul.io/zapgorm2"
 
-	"nunu-http-layout/internal/conf"
-	"nunu-http-layout/pkg/log"
+	"goal-advanced-layout/internal/conf"
+	"goal-advanced-layout/pkg/log"
 )
 
 var ProviderSet = wire.NewSet(NewDB,NewRedis,NewData,NewUserRepo)

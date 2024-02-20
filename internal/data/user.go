@@ -6,8 +6,8 @@ import (
 
 	"gorm.io/gorm"
 
-	"nunu-http-layout/api"
-	"nunu-http-layout/internal/data/model"
+	"goal-advanced-layout/api"
+	"goal-advanced-layout/internal/data/model"
 )
 
 type UserRepo interface {
