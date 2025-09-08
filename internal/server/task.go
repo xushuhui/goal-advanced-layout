@@ -2,8 +2,9 @@ package server
 
 import (
 	"context"
-	"goal-advanced-layout/pkg/log"
 	"time"
+
+	"goal-advanced-layout/pkg/log"
 
 	"github.com/go-co-op/gocron"
 	"go.uber.org/zap"
@@ -19,8 +20,8 @@ func NewTask(log *log.Logger) *Task {
 		log: log,
 	}
 }
+
 func (t *Task) Start(ctx context.Context) error {
-	// eg: crontab task
 	t.scheduler = gocron.NewScheduler(time.UTC)
 
 	_, err := t.scheduler.CronWithSeconds("0/3 * * * * *").Do(func() {
@@ -40,6 +41,7 @@ func (t *Task) Start(ctx context.Context) error {
 	t.scheduler.StartBlocking()
 	return nil
 }
+
 func (t *Task) Stop(ctx context.Context) error {
 	t.scheduler.Stop()
 	t.log.Info("Task stop...")

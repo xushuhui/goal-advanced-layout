@@ -7,19 +7,19 @@ import (
 	"go.uber.org/zap"
 
 	"goal-advanced-layout/api"
-	"goal-advanced-layout/internal/service"
+	"goal-advanced-layout/internal/biz"
 )
 
-func NewUserHandler(handler *Handler, userService service.UserService) *UserHandler {
+func NewUserHandler(handler *Handler, uu *biz.UserUsecase) *UserHandler {
 	return &UserHandler{
-		Handler:     handler,
-		userService: userService,
+		Handler: handler,
+		uu:      uu,
 	}
 }
 
 type UserHandler struct {
 	*Handler
-	userService service.UserService
+	uu *biz.UserUsecase
 }
 
 // Register godoc
@@ -39,7 +39,7 @@ func (h *UserHandler) Register(ctx *gin.Context) {
 		return
 	}
 
-	if err := h.userService.Register(ctx, req); err != nil {
+	if err := h.uu.Register(ctx, req); err != nil {
 		h.logger.WithContext(ctx).Error("userService.Register error", zap.Error(err))
 		api.Fail(ctx, http.StatusInternalServerError, err, nil)
 		return
@@ -65,7 +65,7 @@ func (h *UserHandler) Login(ctx *gin.Context) {
 		return
 	}
 
-	token, err := h.userService.Login(ctx, &req)
+	token, err := h.uu.Login(ctx, &req)
 	if err != nil {
 		api.Fail(ctx, http.StatusUnauthorized, api.ErrUnauthorized, nil)
 		return
@@ -92,7 +92,7 @@ func (h *UserHandler) GetProfile(ctx *gin.Context) {
 		return
 	}
 
-	user, err := h.userService.GetProfile(ctx, userId)
+	user, err := h.uu.GetProfile(ctx, userId)
 	if err != nil {
 		api.Fail(ctx, http.StatusBadRequest, api.ErrBadRequest, nil)
 		return
@@ -110,7 +110,7 @@ func (h *UserHandler) UpdateProfile(ctx *gin.Context) {
 		return
 	}
 
-	if err := h.userService.UpdateProfile(ctx, userId, &req); err != nil {
+	if err := h.uu.UpdateProfile(ctx, userId, &req); err != nil {
 		api.Fail(ctx, http.StatusInternalServerError, api.ErrInternalServerError, nil)
 		return
 	}

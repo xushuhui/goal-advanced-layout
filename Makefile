@@ -13,8 +13,8 @@ bootstrap:
 
 .PHONY: mock
 mock:
-	mockgen -source=internal/service/user.go -destination test/mocks/service/user.go
-	mockgen -source=internal/repository/user.go -destination test/mocks/repository/user.go
+	mockgen -source=internal/biz/user.go -destination test/mocks/biz/user.go
+	mockgen -source=internal/data/user.go -destination test/mocks/data/user.go
 
 .PHONY: test
 test:

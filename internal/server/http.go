@@ -2,7 +2,6 @@ package server
 
 import (
 	"goal-advanced-layout/api"
-	"goal-advanced-layout/docs"
 	"goal-advanced-layout/internal/conf"
 	"goal-advanced-layout/internal/handler"
 	"goal-advanced-layout/internal/server/middleware"
@@ -11,8 +10,6 @@ import (
 	"goal-advanced-layout/pkg/server/http"
 
 	"github.com/gin-gonic/gin"
-	swaggerfiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func NewHTTPServer(
@@ -27,13 +24,6 @@ func NewHTTPServer(
 		logger,
 		http.WithServerHost(conf.Http.Addr),
 	)
-
-	// swagger doc
-	docs.SwaggerInfo.BasePath = "/api"
-	s.GET("/swagger/*any", ginSwagger.WrapHandler(
-		swaggerfiles.Handler,
-		ginSwagger.DefaultModelsExpandDepth(-1),
-	))
 
 	s.Use(
 		middleware.CORS(),

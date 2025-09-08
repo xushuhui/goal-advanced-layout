@@ -9,13 +9,12 @@ import (
 	"github.com/redis/go-redis/v9"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"moul.io/zapgorm2"
 
 	"goal-advanced-layout/internal/conf"
 	"goal-advanced-layout/pkg/log"
 )
 
-var ProviderSet = wire.NewSet(NewDB,NewRedis,NewData,NewUserRepo)
+var ProviderSet = wire.NewSet(NewDB, NewRedis, NewData, NewUserRepo)
 
 type Data struct {
 	db     *gorm.DB
@@ -32,9 +31,7 @@ func NewData(db *gorm.DB, rdb *redis.Client, logger *log.Logger) *Data {
 }
 
 func NewDB(conf *conf.Data, l *log.Logger) *gorm.DB {
-	logger := zapgorm2.New(l.Logger)
-	logger.SetAsDefault()
-	db, err := gorm.Open(mysql.Open(conf.Database.Source), &gorm.Config{Logger: logger})
+	db, err := gorm.Open(mysql.Open(conf.Database.Source), &gorm.Config{})
 	if err != nil {
 		panic(err)
 	}

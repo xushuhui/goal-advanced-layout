@@ -1,4 +1,4 @@
-package service
+package biz
 
 import (
 	"github.com/google/wire"
@@ -8,16 +8,16 @@ import (
 	"goal-advanced-layout/pkg/log"
 )
 
-var ProviderSet = wire.NewSet(NewService,NewUserService)
+var ProviderSet = wire.NewSet(NewUsecase, NewUserUsecase)
 
-type Service struct {
+type Usecase struct {
 	logger *log.Logger
 	sid    *sid.Sid
 	jwt    *jwt.JWT
 }
 
-func NewService(logger *log.Logger, sid *sid.Sid, jwt *jwt.JWT) *Service {
-	return &Service{
+func NewUsecase(logger *log.Logger, sid *sid.Sid, jwt *jwt.JWT) *Usecase {
+	return &Usecase{
 		logger: logger,
 		sid:    sid,
 		jwt:    jwt,

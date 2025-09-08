@@ -7,17 +7,11 @@ import (
 	"gorm.io/gorm"
 
 	"goal-advanced-layout/api"
+	"goal-advanced-layout/internal/biz"
 	"goal-advanced-layout/internal/data/model"
 )
 
-type UserRepo interface {
-	Create(ctx context.Context, user *model.User) error
-	Update(ctx context.Context, user *model.User) error
-	GetByID(ctx context.Context, id string) (*model.User, error)
-	GetByUsername(ctx context.Context, username string) (*model.User, error)
-}
-
-func NewUserRepo(data *Data) UserRepo {
+func NewUserRepo(data *Data) biz.UserRepo {
 	return &userRepo{
 		Data: data,
 	}

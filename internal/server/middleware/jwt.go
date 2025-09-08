@@ -1,10 +1,10 @@
 package middleware
 
 import (
+	"log/slog"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"go.uber.org/zap"
 
 	"goal-advanced-layout/api"
 	"goal-advanced-layout/pkg/jwt"
@@ -15,7 +15,7 @@ func StrictAuth(j *jwt.JWT, logger *log.Logger) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		tokenString := ctx.Request.Header.Get("Authorization")
 		if tokenString == "" {
-			logger.WithContext(ctx).Warn("No token", zap.Any("data", map[string]any{
+			logger.WithContext(ctx).Warn("No token", slog.Any("data", map[string]any{
 				"url":    ctx.Request.URL,
 				"params": ctx.Params,
 			}))
@@ -26,10 +26,11 @@ func StrictAuth(j *jwt.JWT, logger *log.Logger) gin.HandlerFunc {
 
 		claims, err := j.ParseToken(tokenString)
 		if err != nil {
-			logger.WithContext(ctx).Error("token error", zap.Any("data", map[string]any{
+			logger.WithContext(ctx).Error("token error", slog.Any("data", map[string]any{
 				"url":    ctx.Request.URL,
 				"params": ctx.Params,
-			}), zap.Error(err))
+				"err":    err,
+			}))
 			api.Fail(ctx, http.StatusUnauthorized, api.ErrUnauthorized, nil)
 			ctx.Abort()
 			return
@@ -69,5 +70,5 @@ func NoStrictAuth(j *jwt.JWT, logger *log.Logger) gin.HandlerFunc {
 
 func recoveryLoggerFunc(ctx *gin.Context, logger *log.Logger) {
 	userInfo := ctx.MustGet("claims").(*jwt.MyCustomClaims)
-	logger.WithValue(ctx, zap.String("UserId", userInfo.UserId))
+	logger.WithValue(ctx, slog.String("UserId", userInfo.UserId))
 }
