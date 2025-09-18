@@ -2,11 +2,7 @@ package data
 
 import (
 	"context"
-	"errors"
 
-	"gorm.io/gorm"
-
-	"goal-advanced-layout/api"
 	"goal-advanced-layout/internal/biz"
 	"goal-advanced-layout/internal/data/model"
 )
@@ -21,41 +17,34 @@ type userRepo struct {
 	*Data
 }
 
-func (r *userRepo) Create(ctx context.Context, user *model.User) error {
-	if err := r.db.Create(user).Error; err != nil {
+func (r *userRepo) Create(ctx context.Context, user *biz.User) error {
+	_, err := r.query.CreateUser(ctx, model.CreateUserParams{})
+	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func (r *userRepo) Update(ctx context.Context, user *model.User) error {
-	if err := r.db.Save(user).Error; err != nil {
-		return err
-	}
-
+func (r *userRepo) Update(ctx context.Context, user *biz.User) error {
 	return nil
 }
 
-func (r *userRepo) GetByID(ctx context.Context, userID string) (*model.User, error) {
-	var user model.User
-	if err := r.db.Where("user_id = ?", userID).First(&user).Error; err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, api.ErrNotFound
-		}
+func (r *userRepo) GetByID(ctx context.Context, userID string) (*biz.User, error) {
+	user, err := r.query.GetUser(ctx, userID)
+	if err != nil {
 		return nil, err
 	}
-
-	return &user, nil
+	return &biz.User{
+		UserId: user.UserID,
+	}, nil
 }
 
-func (r *userRepo) GetByUsername(ctx context.Context, username string) (*model.User, error) {
-	var user model.User
-	if err := r.db.Where("username = ?", username).First(&user).Error; err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, nil
-		}
+func (r *userRepo) GetByUsername(ctx context.Context, username string) (*biz.User, error) {
+	user, err := r.query.GetUserByUsername(ctx, username)
+	if err != nil {
 		return nil, err
 	}
-
-	return &user, nil
+	return &biz.User{
+		UserId: user.UserID,
+	}, nil
 }

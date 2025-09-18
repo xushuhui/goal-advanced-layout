@@ -30,7 +30,6 @@ type Jwt struct {
 }
 
 type Database struct {
-	Driver string `protobuf:"bytes,1,opt,name=driver,proto3" json:"driver,omitempty"`
 	Source string `protobuf:"bytes,2,opt,name=source,proto3" json:"source,omitempty"`
 }
 

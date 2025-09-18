@@ -1,41 +1,41 @@
 package data
 
 import (
-	"context"
-	"fmt"
-	"time"
+	"database/sql"
 
 	"github.com/google/wire"
 	"github.com/redis/go-redis/v9"
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
 
 	"goal-advanced-layout/internal/conf"
+	"goal-advanced-layout/internal/data/model"
 	"goal-advanced-layout/pkg/log"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 var ProviderSet = wire.NewSet(NewDB, NewRedis, NewData, NewUserRepo)
 
 type Data struct {
-	db     *gorm.DB
+	query  *model.Queries
 	rdb    *redis.Client
 	logger *log.Logger
 }
 
-func NewData(db *gorm.DB, rdb *redis.Client, logger *log.Logger) *Data {
+func NewData(db *sql.DB, rdb *redis.Client, logger *log.Logger) *Data {
 	return &Data{
-		db:     db,
+		query:  model.New(db),
 		rdb:    rdb,
 		logger: logger,
 	}
 }
 
-func NewDB(conf *conf.Data, l *log.Logger) *gorm.DB {
-	db, err := gorm.Open(mysql.Open(conf.Database.Source), &gorm.Config{})
+func NewDB(conf *conf.Data, l *log.Logger) *sql.DB {
+	db, err := sql.Open("mysql", conf.Database.Source)
 	if err != nil {
-		panic(err)
+		l.Errorf("failed to connect to database: %v", err)
+		return nil
 	}
-	db = db.Debug()
+
 	return db
 }
 
@@ -45,14 +45,6 @@ func NewRedis(conf *conf.Data) *redis.Client {
 		Password: conf.Redis.Password,
 		DB:       int(conf.Redis.Db),
 	})
-
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	_, err := rdb.Ping(ctx).Result()
-	if err != nil {
-		panic(fmt.Sprintf("redis error: %s", err.Error()))
-	}
 
 	return rdb
 }

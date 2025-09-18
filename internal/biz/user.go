@@ -7,18 +7,24 @@ import (
 	"golang.org/x/crypto/bcrypt"
 
 	v1 "goal-advanced-layout/api"
-	"goal-advanced-layout/internal/data/model"
 )
 
 type UserRepo interface {
-	Create(ctx context.Context, user *model.User) error
-	Update(ctx context.Context, user *model.User) error
-	GetByID(ctx context.Context, id string) (*model.User, error)
-	GetByUsername(ctx context.Context, username string) (*model.User, error)
+	Create(ctx context.Context, user *User) error
+	Update(ctx context.Context, user *User) error
+	GetByID(ctx context.Context, id string) (*User, error)
+	GetByUsername(ctx context.Context, username string) (*User, error)
 }
 type UserUsecase struct {
 	c  *Usecase
 	ur UserRepo
+}
+type User struct {
+	UserId   string
+	UserName string
+	Nickname string
+	Password string
+	Email    string
 }
 
 func NewUserUsecase(c *Usecase, userRepo UserRepo) *UserUsecase {
@@ -44,9 +50,8 @@ func (s *UserUsecase) Register(ctx context.Context, req *v1.RegisterRequest) err
 		return err
 	}
 	// Create a user
-	user := &model.User{
+	user := &User{
 		UserId:   userID,
-		Username: req.Username,
 		Nickname: req.Username,
 		Password: string(hashedPassword),
 		Email:    req.Email,
@@ -85,7 +90,6 @@ func (s *UserUsecase) GetProfile(ctx context.Context, userId string) (*v1.GetPro
 	return &v1.GetProfileResponseData{
 		UserId:   user.UserId,
 		Nickname: user.Nickname,
-		Username: user.Username,
 	}, nil
 }
 

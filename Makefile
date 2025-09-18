@@ -5,11 +5,7 @@ init:
 	go install github.com/golang/mock/mockgen@latest
 	go install github.com/swaggo/swag/cmd/swag@latest
 
-.PHONY: bootstrap
-bootstrap:
-	cd ./deploy/docker-compose && docker compose up -d && cd ../../
-	go run ./cmd/migration
-	nunu run ./cmd/server
+
 
 .PHONY: mock
 mock:
