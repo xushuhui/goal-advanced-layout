@@ -35,7 +35,7 @@ func (r *userRepo) GetByID(ctx context.Context, userID string) (*biz.User, error
 		return nil, err
 	}
 	return &biz.User{
-		UserId: user.UserID,
+		UserID: user.UserID,
 	}, nil
 }
 
@@ -45,6 +45,6 @@ func (r *userRepo) GetByUsername(ctx context.Context, username string) (*biz.Use
 		return nil, err
 	}
 	return &biz.User{
-		UserId: user.UserID,
+		UserID: user.UserID,
 	}, nil
 }

@@ -11,7 +11,7 @@ import (
 )
 
 const createUser = `-- name: CreateUser :execresult
-INSERT INTO user (user_id,username, password) VALUES (?,?, ?)
+INSERT INTO user (user_id,username, password) VALUES (?,?,?)
 `
 
 type CreateUserParams struct {
@@ -24,8 +24,17 @@ func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (sql.Res
 	return q.db.ExecContext(ctx, createUser, arg.UserID, arg.Username, arg.Password)
 }
 
+const deleteUser = `-- name: DeleteUser :exec
+UPDATE user SET deleted_at=NOW() WHERE user_id = ?
+`
+
+func (q *Queries) DeleteUser(ctx context.Context, userID string) error {
+	_, err := q.db.ExecContext(ctx, deleteUser, userID)
+	return err
+}
+
 const getUser = `-- name: GetUser :one
-SELECT id, user_id, username, nickname, password, email, created_at, updated_at, deleted_at FROM user WHERE user_id = ? LIMIT 1
+SELECT id, user_id, username, nickname, password, email, created_at, updated_at, deleted_at FROM user WHERE user_id = ? AND deleted_at IS NULL LIMIT 1
 `
 
 func (q *Queries) GetUser(ctx context.Context, userID string) (User, error) {
@@ -46,7 +55,7 @@ func (q *Queries) GetUser(ctx context.Context, userID string) (User, error) {
 }
 
 const getUserByUsername = `-- name: GetUserByUsername :one
-SELECT id, user_id, username, nickname, password, email, created_at, updated_at, deleted_at FROM user WHERE username = ? LIMIT 1
+SELECT id, user_id, username, nickname, password, email, created_at, updated_at, deleted_at FROM user WHERE username = ? AND deleted_at IS NULL LIMIT 1
 `
 
 func (q *Queries) GetUserByUsername(ctx context.Context, username string) (User, error) {
@@ -66,8 +75,50 @@ func (q *Queries) GetUserByUsername(ctx context.Context, username string) (User,
 	return i, err
 }
 
+const getUsersByPage = `-- name: GetUsersByPage :many
+SELECT id, user_id, username, nickname, password, email, created_at, updated_at, deleted_at FROM user WHERE deleted_at IS NULL ORDER BY id DESC LIMIT ? OFFSET ?
+`
+
+type GetUsersByPageParams struct {
+	Limit  int32
+	Offset int32
+}
+
+func (q *Queries) GetUsersByPage(ctx context.Context, arg GetUsersByPageParams) ([]User, error) {
+	rows, err := q.db.QueryContext(ctx, getUsersByPage, arg.Limit, arg.Offset)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []User
+	for rows.Next() {
+		var i User
+		if err := rows.Scan(
+			&i.ID,
+			&i.UserID,
+			&i.Username,
+			&i.Nickname,
+			&i.Password,
+			&i.Email,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+			&i.DeletedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const listUser = `-- name: ListUser :many
-SELECT id, user_id, username, nickname, password, email, created_at, updated_at, deleted_at FROM user ORDER BY name
+SELECT id, user_id, username, nickname, password, email, created_at, updated_at, deleted_at FROM user WHERE deleted_at IS NULL ORDER BY id DESC
 `
 
 func (q *Queries) ListUser(ctx context.Context) ([]User, error) {
@@ -101,4 +152,19 @@ func (q *Queries) ListUser(ctx context.Context) ([]User, error) {
 		return nil, err
 	}
 	return items, nil
+}
+
+const updateUser = `-- name: UpdateUser :exec
+UPDATE user SET username = ?, password = ? WHERE user_id = ?
+`
+
+type UpdateUserParams struct {
+	Username string
+	Password string
+	UserID   string
+}
+
+func (q *Queries) UpdateUser(ctx context.Context, arg UpdateUserParams) error {
+	_, err := q.db.ExecContext(ctx, updateUser, arg.Username, arg.Password, arg.UserID)
+	return err
 }

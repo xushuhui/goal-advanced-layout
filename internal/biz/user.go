@@ -20,7 +20,7 @@ type UserUsecase struct {
 	ur UserRepo
 }
 type User struct {
-	UserId   string
+	UserID   string
 	UserName string
 	Nickname string
 	Password string
@@ -44,14 +44,13 @@ func (s *UserUsecase) Register(ctx context.Context, req *v1.RegisterRequest) err
 	if err != nil {
 		return err
 	}
-	// Generate user ID
 	userID, err := s.c.sid.GenString()
 	if err != nil {
 		return err
 	}
 	// Create a user
 	user := &User{
-		UserId:   userID,
+		UserID:   userID,
 		Nickname: req.Username,
 		Password: string(hashedPassword),
 		Email:    req.Email,
@@ -73,7 +72,7 @@ func (s *UserUsecase) Login(ctx context.Context, req *v1.LoginRequest) (string, 
 	if err != nil {
 		return "", err
 	}
-	token, err := s.c.jwt.GenToken(user.UserId, time.Now().Add(time.Hour*24*90))
+	token, err := s.c.jwt.GenToken(user.UserID, time.Now().Add(time.Hour*24*90))
 	if err != nil {
 		return "", err
 	}
@@ -88,7 +87,7 @@ func (s *UserUsecase) GetProfile(ctx context.Context, userId string) (*v1.GetPro
 	}
 
 	return &v1.GetProfileResponseData{
-		UserId:   user.UserId,
+		UserId:   user.UserID,
 		Nickname: user.Nickname,
 	}, nil
 }

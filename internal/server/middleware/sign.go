@@ -1,18 +1,18 @@
 package middleware
 
 import (
-	v1 "goal-advanced-layout/api"
-	"goal-advanced-layout/pkg/helper/md5"
-	"goal-advanced-layout/pkg/log"
 	"net/http"
 	"sort"
 	"strings"
 
+	v1 "goal-advanced-layout/api"
+	"goal-advanced-layout/pkg/helper/md5"
+	"goal-advanced-layout/pkg/log"
+
 	"github.com/gin-gonic/gin"
-	"github.com/spf13/viper"
 )
 
-func SignMiddleware(logger *log.Logger, conf *viper.Viper) gin.HandlerFunc {
+func SignMiddleware(logger *log.Logger) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		requiredHeaders := []string{"Timestamp", "Nonce", "Sign", "App-Version"}
 
@@ -26,7 +26,7 @@ func SignMiddleware(logger *log.Logger, conf *viper.Viper) gin.HandlerFunc {
 		}
 
 		data := map[string]string{
-			"AppKey":     conf.GetString("security.api_sign.app_key"),
+			"AppKey":     "your app key",
 			"Timestamp":  ctx.Request.Header.Get("Timestamp"),
 			"Nonce":      ctx.Request.Header.Get("Nonce"),
 			"AppVersion": ctx.Request.Header.Get("App-Version"),
@@ -42,8 +42,6 @@ func SignMiddleware(logger *log.Logger, conf *viper.Viper) gin.HandlerFunc {
 		for _, k := range keys {
 			str += k + data[k]
 		}
-		str += conf.GetString("security.api_sign.app_security")
-
 		if ctx.Request.Header.Get("Sign") != strings.ToUpper(md5.Md5(str)) {
 			v1.Fail(ctx, http.StatusBadRequest, v1.ErrBadRequest, nil)
 			ctx.Abort()
