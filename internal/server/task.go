@@ -7,7 +7,6 @@ import (
 	"goal-advanced-layout/pkg/log"
 
 	"github.com/go-co-op/gocron"
-	"go.uber.org/zap"
 )
 
 type Task struct {
@@ -23,19 +22,18 @@ func NewTask(log *log.Logger) *Task {
 
 func (t *Task) Start(ctx context.Context) error {
 	t.scheduler = gocron.NewScheduler(time.UTC)
-
 	_, err := t.scheduler.CronWithSeconds("0/3 * * * * *").Do(func() {
 		t.log.Info("I'm a Task1.")
 	})
 	if err != nil {
-		t.log.Error("Task1 error", zap.Error(err))
+		t.log.Error("Task1 error" + err.Error())
 	}
 
 	_, err = t.scheduler.Every("3s").Do(func() {
 		t.log.Info("I'm a Task2.")
 	})
 	if err != nil {
-		t.log.Error("Task2 error", zap.Error(err))
+		t.log.Error("Task2 error" + err.Error())
 	}
 
 	t.scheduler.StartBlocking()

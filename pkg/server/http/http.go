@@ -3,7 +3,6 @@ package http
 import (
 	"context"
 	"errors"
-	"fmt"
 	"net/http"
 	"time"
 
@@ -16,8 +15,7 @@ type Server struct {
 	*gin.Engine
 	httpSrv *http.Server
 	host    string
-
-	logger *log.Logger
+	logger  *log.Logger
 }
 
 type Option func(s *Server)
@@ -41,7 +39,7 @@ func WithServerHost(host string) Option {
 
 func (s *Server) Start(ctx context.Context) error {
 	s.httpSrv = &http.Server{
-		Addr:    fmt.Sprintf("%s", s.host),
+		Addr:    s.host,
 		Handler: s,
 	}
 
@@ -53,11 +51,10 @@ func (s *Server) Start(ctx context.Context) error {
 }
 
 func (s *Server) Stop(ctx context.Context) error {
-	// the request it is currently handling
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	if err := s.httpSrv.Shutdown(ctx); err != nil {
-		s.logger.Errorf("Server forced to shutdown: ", err)
+		s.logger.Errorf("Server forced to shutdown: %w", err)
 	}
 
 	s.logger.Info("Server exiting")

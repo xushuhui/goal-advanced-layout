@@ -30,7 +30,7 @@ func main() {
 		panic(err)
 	}
 	defer cleanup()
-	logger.Info("server start", slog.String("host", conf.Server.Http.Addr))
+	logger.Info("server start", slog.String("host", conf.Server.HTTP.Addr))
 
 	if err = app.Run(context.Background()); err != nil {
 		panic(err)

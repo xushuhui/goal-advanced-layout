@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"go.uber.org/zap"
 
 	"goal-advanced-layout/api"
 	"goal-advanced-layout/internal/biz"
@@ -40,7 +39,7 @@ func (h *UserHandler) Register(ctx *gin.Context) {
 	}
 
 	if err := h.uu.Register(ctx, req); err != nil {
-		h.logger.WithContext(ctx).Error("userService.Register error", zap.Error(err))
+		h.logger.WithContext(ctx).Error("userService.Register error" + err.Error())
 		api.Fail(ctx, http.StatusInternalServerError, err, nil)
 		return
 	}

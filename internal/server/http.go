@@ -22,7 +22,7 @@ func NewHTTPServer(
 	s := http.NewServer(
 		gin.Default(),
 		logger,
-		http.WithServerHost(conf.Http.Addr),
+		http.WithServerHost(conf.HTTP.Addr),
 	)
 
 	s.Use(

@@ -11,7 +11,6 @@ import (
 	"goal-advanced-layout/pkg/log"
 
 	"github.com/gin-gonic/gin"
-	"go.uber.org/zap"
 )
 
 func RequestLog(logger *log.Logger) gin.HandlerFunc {
@@ -40,7 +39,7 @@ func ResponseLog(logger *log.Logger) gin.HandlerFunc {
 		ctx.Next()
 		duration := time.Since(startTime).String()
 		ctx.Header("X-Response-Time", duration)
-		logger.WithContext(ctx).Info("Response", zap.Any("response_body", blw.body.String()), zap.Any("time", duration))
+		logger.WithContext(ctx).Info("Response", slog.String("response_body", blw.body.String()), slog.String("time", duration))
 	}
 }
 

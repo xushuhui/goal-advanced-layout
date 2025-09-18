@@ -36,9 +36,9 @@ func (r *userRepo) Update(ctx context.Context, user *model.User) error {
 	return nil
 }
 
-func (r *userRepo) GetByID(ctx context.Context, userId string) (*model.User, error) {
+func (r *userRepo) GetByID(ctx context.Context, userID string) (*model.User, error) {
 	var user model.User
-	if err := r.db.Where("user_id = ?", userId).First(&user).Error; err != nil {
+	if err := r.db.Where("user_id = ?", userID).First(&user).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, api.ErrNotFound
 		}

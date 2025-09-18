@@ -3,26 +3,18 @@ module goal-advanced-layout
 go 1.23.0
 
 require (
-	github.com/DATA-DOG/go-sqlmock v1.5.0
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-co-op/gocron v1.28.2
-	github.com/go-redis/redismock/v9 v9.0.3
 	github.com/golang-jwt/jwt/v5 v5.0.0
-	github.com/golang/mock v1.6.0
 	github.com/google/uuid v1.3.0
 	github.com/google/wire v0.5.0
 	github.com/redis/go-redis/v9 v9.0.5
 	github.com/sony/sonyflake v1.1.0
 	github.com/spf13/viper v1.16.0
-	github.com/stretchr/testify v1.8.4
-	go.uber.org/zap v1.26.0
 	golang.org/x/crypto v0.12.0
-	google.golang.org/grpc v1.55.0
-	google.golang.org/protobuf v1.30.0
 	gopkg.in/yaml.v3 v3.0.1
 	gorm.io/driver/mysql v1.5.1
 	gorm.io/gorm v1.25.5
-	moul.io/zapgorm2 v1.3.0
 )
 
 require (

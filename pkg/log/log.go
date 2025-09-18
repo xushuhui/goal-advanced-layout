@@ -19,7 +19,6 @@ func NewLog() *Logger {
 	return &Logger{slog.New(slog.NewJSONHandler(os.Stdout, nil))}
 }
 
-// WithContext Returns a zap instance from the specified context
 func (l *Logger) WithValue(ctx context.Context, fields ...slog.Attr) context.Context {
 	if c, ok := ctx.(*gin.Context); ok {
 		ctx = c.Request.Context()
@@ -29,7 +28,6 @@ func (l *Logger) WithValue(ctx context.Context, fields ...slog.Attr) context.Con
 	return context.WithValue(ctx, ctxLoggerKey, l.WithContext(ctx).With(fields))
 }
 
-// WithContext Returns a zap instance from the specified context
 func (l *Logger) WithContext(ctx context.Context) *Logger {
 	if c, ok := ctx.(*gin.Context); ok {
 		ctx = c.Request.Context()
